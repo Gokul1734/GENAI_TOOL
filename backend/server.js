@@ -11,6 +11,7 @@ import dotenv from 'dotenv'
 import userRoutes from './services/user/routes.js'
 import authRoutes from './services/auth/routes.js'
 import healthRoutes from './services/health/routes.js'
+import misinfoRoutes from './services/misinfo/routes.js'
 
 // Load environment variables
 dotenv.config()
@@ -61,13 +62,14 @@ mongoose.connection.on('error', (err) => {
 app.use('/api/users', userRoutes)
 app.use('/api/auth', authRoutes)
 app.use('/api/health', healthRoutes)
+app.use('/api/misinfo', misinfoRoutes)
 
 // Root route
 app.get('/', (req, res) => {
   res.json({
     message: 'Welcome to MERN Stack API',
     version: '1.0.0',
-    services: ['users', 'auth', 'health'],
+    services: ['users', 'auth', 'health', 'misinfo'],
     documentation: '/api/docs'
   })
 })
