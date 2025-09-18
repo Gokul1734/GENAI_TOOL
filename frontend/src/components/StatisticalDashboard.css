@@ -2,9 +2,11 @@
 .statistical-dashboard {
   padding: 2rem;
   background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(25px);
   border-radius: 20px;
   margin-top: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .dashboard-header {
@@ -57,27 +59,101 @@
 }
 
 .metric-card {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
   padding: 1.5rem;
   display: flex;
   align-items: center;
   gap: 1rem;
   transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  pointer-events: none;
+}
+
+.metric-card.misinfo-glass {
+  background: rgba(255, 71, 87, 0.15);
+  border: 1px solid rgba(255, 71, 87, 0.3);
+  box-shadow: 0 8px 32px rgba(255, 71, 87, 0.2);
+}
+
+.metric-card.misinfo-glass::before {
+  background: linear-gradient(135deg, rgba(255, 71, 87, 0.2) 0%, rgba(255, 71, 87, 0.05) 100%);
+}
+
+.metric-card.truth-glass {
+  background: rgba(46, 213, 115, 0.15);
+  border: 1px solid rgba(46, 213, 115, 0.3);
+  box-shadow: 0 8px 32px rgba(46, 213, 115, 0.2);
+}
+
+.metric-card.truth-glass::before {
+  background: linear-gradient(135deg, rgba(46, 213, 115, 0.2) 0%, rgba(46, 213, 115, 0.05) 100%);
+}
+
+.metric-card.accuracy-glass {
+  background: rgba(102, 126, 234, 0.15);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.2);
+}
+
+.metric-card.accuracy-glass::before {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(102, 126, 234, 0.05) 100%);
+}
+
+.metric-card.warning-glass {
+  background: rgba(255, 165, 2, 0.15);
+  border: 1px solid rgba(255, 165, 2, 0.3);
+  box-shadow: 0 8px 32px rgba(255, 165, 2, 0.2);
+}
+
+.metric-card.warning-glass::before {
+  background: linear-gradient(135deg, rgba(255, 165, 2, 0.2) 0%, rgba(255, 165, 2, 0.05) 100%);
 }
 
 .metric-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.metric-card.misinfo-glass:hover {
+  box-shadow: 0 15px 40px rgba(255, 71, 87, 0.3);
+}
+
+.metric-card.truth-glass:hover {
+  box-shadow: 0 15px 40px rgba(46, 213, 115, 0.3);
+}
+
+.metric-card.accuracy-glass:hover {
+  box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+}
+
+.metric-card.warning-glass:hover {
+  box-shadow: 0 15px 40px rgba(255, 165, 2, 0.3);
 }
 
 .metric-icon {
   font-size: 2.5rem;
   padding: 1rem;
-  border-radius: 15px;
-  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  z-index: 1;
 }
 
 .misinfo-icon {
@@ -150,11 +226,25 @@
 }
 
 .chart-container {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
   padding: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.chart-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 100%);
+  pointer-events: none;
 }
 
 .chart-container h3 {
@@ -171,11 +261,25 @@
 
 /* Alerts Section */
 .alerts-section {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
   padding: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.alerts-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 100%);
+  pointer-events: none;
 }
 
 .alerts-section h3 {
@@ -206,18 +310,30 @@
 }
 
 .alert-item.high-priority {
-  background: rgba(255, 71, 87, 0.1);
+  background: rgba(255, 71, 87, 0.15);
   border-left-color: #ff4757;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 71, 87, 0.2);
+  border-left: 4px solid #ff4757;
+  box-shadow: 0 4px 16px rgba(255, 71, 87, 0.1);
 }
 
 .alert-item.medium-priority {
-  background: rgba(255, 193, 7, 0.1);
+  background: rgba(255, 193, 7, 0.15);
   border-left-color: #ffa502;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 193, 7, 0.2);
+  border-left: 4px solid #ffa502;
+  box-shadow: 0 4px 16px rgba(255, 193, 7, 0.1);
 }
 
 .alert-item.low-priority {
-  background: rgba(46, 213, 115, 0.1);
+  background: rgba(46, 213, 115, 0.15);
   border-left-color: #2ed573;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(46, 213, 115, 0.2);
+  border-left: 4px solid #2ed573;
+  box-shadow: 0 4px 16px rgba(46, 213, 115, 0.1);
 }
 
 .alert-icon {
