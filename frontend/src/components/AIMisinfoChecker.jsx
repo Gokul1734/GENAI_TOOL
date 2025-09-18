@@ -38,7 +38,7 @@ const AIMisinfoChecker = () => {
         console.error('Analysis failed:', result.message)
         // Fallback to mock data if API fails
         const mockResult = {
-          misinfo: Math.random() > 0.5,
+          misinfo: inputData == 'misinfo' ? true : false,
           source: ['indiatoday.com/news', 'bbc.com/output', 'reuters.com/article'],
           sourceClassifier: 'Technology / Finance',
           classifiedType: 'MovieSuggestions',
@@ -68,7 +68,7 @@ const AIMisinfoChecker = () => {
       console.error('Error calling API:', error)
       // Fallback to mock data
       const mockResult = {
-        misinfo: Math.random() > 0.5,
+        misinfo: inputData == 'misinfo' ? true : false,
         source: ['indiatoday.com/news', 'bbc.com/output', 'reuters.com/article'],
         sourceClassifier: 'Technology / Finance',
         classifiedType: 'MovieSuggestions',
@@ -193,7 +193,7 @@ const AIMisinfoChecker = () => {
                   ) : (
                     <FaCheck className="truth-icon" />
                   )}
-                  <span className={`status-text ${isMisinfo ? 'misinfo' : 'truth'}`}>
+                  <span className={`status-text ${isMisinfo ? 'misinfo' : 'black'}`}>
                     {isMisinfo ? 'MISINFORMATION DETECTED' : 'VERIFIED INFORMATION'}
                   </span>
                 </div>

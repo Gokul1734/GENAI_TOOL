@@ -13,7 +13,7 @@ import authRoutes from './services/auth/routes.js'
 import healthRoutes from './services/health/routes.js'
 import misinfoRoutes from './services/misinfo/routes.js'
 
-// Load environment variables
+// Load environment variables 
 dotenv.config()
 
 const app = express()
