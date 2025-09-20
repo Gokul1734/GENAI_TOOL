@@ -38,35 +38,6 @@ const StatisticalDashboard = ({ analysisResult, isMisinfo }) => {
   const [timeFilter, setTimeFilter] = useState('7d')
   const [selectedCategory, setSelectedCategory] = useState('all')
 
-<<<<<<< HEAD
-  // Mock data for demonstrations
-  const mockTimeSeriesData = {
-    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-    datasets: [
-      {
-        label: 'Misinformation Detected',
-        data: [12, 19, 3, 5, 2, 3, 8],
-        borderColor: '#ff4757',
-        backgroundColor: 'rgba(255, 71, 87, 0.1)',
-        tension: 0.4
-      },
-      {
-        label: 'Verified Content',
-        data: [45, 52, 67, 78, 82, 75, 68],
-        borderColor: '#2ed573',
-        backgroundColor: 'rgba(46, 213, 115, 0.1)',
-        tension: 0.4
-      }
-    ]
-  }
-
-  const mockCategoryData = {
-    labels: ['Technology', 'Politics', 'Health', 'Finance', 'Entertainment', 'Sports'],
-    datasets: [
-      {
-        label: 'Misinformation Rate %',
-        data: [15, 25, 8, 12, 5, 3],
-=======
   // Use real API data if available
   const stats = analysisResult?.statistics || {};
   const prediction = analysisResult?.rumour_prediction || {};
@@ -97,7 +68,6 @@ const StatisticalDashboard = ({ analysisResult, isMisinfo }) => {
       {
         label: 'Checks per Category',
         data: categoryValues,
->>>>>>> JD
         backgroundColor: [
           'rgba(102, 126, 234, 0.8)',
           'rgba(118, 75, 162, 0.8)',
@@ -117,46 +87,7 @@ const StatisticalDashboard = ({ analysisResult, isMisinfo }) => {
         borderWidth: 2
       }
     ]
-<<<<<<< HEAD
-  }
-
-  const mockAccuracyData = {
-    labels: ['Accuracy', 'Precision', 'Recall', 'F1-Score'],
-    datasets: [
-      {
-        label: 'Model Performance',
-        data: [94.2, 91.5, 96.8, 94.1],
-        backgroundColor: 'rgba(102, 126, 234, 0.6)',
-        borderColor: 'rgba(102, 126, 234, 1)',
-        borderWidth: 2
-      }
-    ]
-  }
-
-  const mockSourceCredibilityData = {
-    labels: ['High Credibility', 'Medium Credibility', 'Low Credibility', 'Unknown'],
-    datasets: [
-      {
-        data: [65, 20, 10, 5],
-        backgroundColor: [
-          'rgba(46, 213, 115, 0.8)',
-          'rgba(255, 193, 7, 0.8)',
-          'rgba(255, 71, 87, 0.8)',
-          'rgba(108, 117, 125, 0.8)'
-        ],
-        borderColor: [
-          'rgba(46, 213, 115, 1)',
-          'rgba(255, 193, 7, 1)',
-          'rgba(255, 71, 87, 1)',
-          'rgba(108, 117, 125, 1)'
-        ],
-        borderWidth: 2
-      }
-    ]
-  }
-=======
   };
->>>>>>> JD
 
   const chartOptions = {
     responsive: true,
@@ -273,11 +204,7 @@ const StatisticalDashboard = ({ analysisResult, isMisinfo }) => {
               </p>
               <span className="metric-change">
                 <FaArrowUp className="trend-up" />
-<<<<<<< HEAD
-                +12.5% vs last week
-=======
                 {stats.totalChecks ? `+${stats.totalChecks} checks` : '+0 checks'}
->>>>>>> JD
               </span>
             </div>
           </div>
@@ -288,17 +215,10 @@ const StatisticalDashboard = ({ analysisResult, isMisinfo }) => {
             </div>
             <div className="metric-content">
               <h3>Model Accuracy</h3>
-<<<<<<< HEAD
-              <p className="metric-value accuracy">{analysisResult?.confidence.toFixed(1)}%</p>
-              <span className="metric-change">
-                <FaArrowUp className="trend-up" />
-                +2.1% improvement
-=======
               <p className="metric-value accuracy">{stats.avgConfidence ? stats.avgConfidence + '%' : 'N/A'}</p>
               <span className="metric-change">
                 <FaArrowUp className="trend-up" />
                 {stats.avgConfidence ? `+${stats.avgConfidence}%` : '+0%'}
->>>>>>> JD
               </span>
             </div>
           </div>
@@ -309,11 +229,7 @@ const StatisticalDashboard = ({ analysisResult, isMisinfo }) => {
             </div>
             <div className="metric-content">
               <h3>False Positives</h3>
-<<<<<<< HEAD
-              <p className="metric-value warning">{analysisResult?.statistics.falsePositives}%</p>
-=======
               <p className="metric-value warning">{stats.falsePositives ?? 0}%</p>
->>>>>>> JD
               <span className="metric-change">
                 <FaArrowDown className="trend-down" />
                 -0.8% reduction
@@ -325,75 +241,22 @@ const StatisticalDashboard = ({ analysisResult, isMisinfo }) => {
         {/* Charts Grid */}
         <div className="charts-grid">
           <div className="chart-container">
-<<<<<<< HEAD
-            <h3>Detection Trends Over Time</h3>
-            <div className="chart-wrapper">
-              <Line data={mockTimeSeriesData} options={chartOptions} />
-=======
             <h3>Rumour Prediction (Next 12h)</h3>
             <div className="chart-wrapper">
               <Line data={timeSeriesChartData} options={chartOptions} />
->>>>>>> JD
             </div>
           </div>
 
           <div className="chart-container">
             <h3>Category Analysis</h3>
             <div className="chart-wrapper">
-<<<<<<< HEAD
-              <Bar data={mockCategoryData} options={chartOptions} />
-            </div>
-          </div>
-
-          <div className="chart-container">
-            <h3>Model Performance Metrics</h3>
-            <div className="chart-wrapper">
-              <Radar data={mockAccuracyData} options={radarOptions} />
-            </div>
-          </div>
-
-          <div className="chart-container">
-            <h3>Source Credibility Distribution</h3>
-            <div className="chart-wrapper">
-              <Doughnut data={mockSourceCredibilityData} options={doughnutOptions} />
-=======
               <Bar data={categoryChartData} options={chartOptions} />
->>>>>>> JD
             </div>
           </div>
         </div>
 
         {/* Real-time Alerts */}
         <div className="alerts-section">
-<<<<<<< HEAD
-          <h3>Real-time Alerts & Insights</h3>
-          <div className="alerts-list">
-            <div className="alert-item high-priority">
-              <div className="alert-icon">⚠️</div>
-              <div className="alert-content">
-                <h4>Spike in Political Misinformation</h4>
-                <p>Detected 23% increase in political misinformation in the last 2 hours</p>
-                <span className="alert-time">2 minutes ago</span>
-              </div>
-            </div>
-            <div className="alert-item medium-priority">
-              <div className="alert-icon">📊</div>
-              <div className="alert-content">
-                <h4>Model Performance Update</h4>
-                <p>Accuracy improved to 94.2% after latest training cycle</p>
-                <span className="alert-time">15 minutes ago</span>
-              </div>
-            </div>
-            <div className="alert-item low-priority">
-              <div className="alert-icon">✅</div>
-              <div className="alert-content">
-                <h4>System Health Check</h4>
-                <p>All systems operational, response time within normal range</p>
-                <span className="alert-time">1 hour ago</span>
-              </div>
-            </div>
-          </div>
-=======
           <h3>Rumour Alerts & Insights</h3>
           {prediction.alert ? (
             <div className="alert-item high-priority">
@@ -412,7 +275,6 @@ const StatisticalDashboard = ({ analysisResult, isMisinfo }) => {
               </div>
             </div>
           )}
->>>>>>> JD
         </div>
       </div>
     </div>

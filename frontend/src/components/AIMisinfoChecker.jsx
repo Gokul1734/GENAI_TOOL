@@ -5,11 +5,7 @@ import './AIMisinfoChecker.css'
 
 const AIMisinfoChecker = () => {
   const [currentPage, setCurrentPage] = useState('input') // input, loading, dashboard
-<<<<<<< HEAD
-  const [inputType, setInputType] = useState('text')
-=======
   const [inputType, setInputType] = useState('text') // 'text' or 'link' only
->>>>>>> JD
   const [inputData, setInputData] = useState('')
   const [analysisResult, setAnalysisResult] = useState(null)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
@@ -22,9 +18,6 @@ const AIMisinfoChecker = () => {
     setCurrentPage('loading')
     
     try {
-<<<<<<< HEAD
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/misinfo/analyze`, {
-=======
       // Use FastAPI endpoint, default to localhost:8000/verify
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000/verify';
       let payload = {};
@@ -34,56 +27,10 @@ const AIMisinfoChecker = () => {
         payload = { link: inputData };
       }
       const response = await fetch(apiUrl, {
->>>>>>> JD
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-<<<<<<< HEAD
-        body: JSON.stringify({
-          inputType: inputType,
-          inputData: inputData
-        })
-      })
-      
-      const result = await response.json()
-      
-      if (result.success) {
-        setAnalysisResult(result.data)
-        setCurrentPage('dashboard')
-      } else {
-        console.error('Analysis failed:', result.message)
-        // Fallback to mock data if API fails
-        const mockResult = {
-          misinfo: Math.random() > 0.5,
-          source: ['indiatoday.com/news', 'bbc.com/output', 'reuters.com/article'],
-          sourceClassifier: 'Technology / Finance',
-          classifiedType: 'MovieSuggestions',
-          inputType: inputType,
-          confidence: Math.random() * 100,
-          relatedNews: [
-            { title: 'Related Article 1', source: 'news1.com', date: '2024-01-15' },
-            { title: 'Related Article 2', source: 'news2.com', date: '2024-01-14' },
-            { title: 'Related Article 3', source: 'news3.com', date: '2024-01-13' }
-          ],
-          statistics: {
-            totalChecks: 1250,
-            accuracy: 94.2,
-            falsePositives: 3.8,
-            categories: {
-              'Technology': 45,
-              'Politics': 30,
-              'Health': 15,
-              'Finance': 10
-            }
-          }
-        }
-        setAnalysisResult(mockResult)
-        setCurrentPage('dashboard')
-      }
-    } catch (error) {
-      console.error('Error calling API:', error)
-=======
         body: JSON.stringify(payload)
       });
       // Handle non-200 responses and empty body
@@ -132,7 +79,6 @@ const AIMisinfoChecker = () => {
       }
     } catch (error) {
       console.error('Error calling API:', error);
->>>>>>> JD
       // Fallback to mock data
       const mockResult = {
         misinfo: Math.random() > 0.5,
@@ -157,80 +103,17 @@ const AIMisinfoChecker = () => {
             'Finance': 10
           }
         }
-<<<<<<< HEAD
-      }
-      setAnalysisResult(mockResult)
-      setCurrentPage('dashboard')
-    } finally {
-      setIsAnalyzing(false)
-=======
       };
       setAnalysisResult(mockResult);
       setCurrentPage('dashboard');
     } finally {
       setIsAnalyzing(false);
->>>>>>> JD
     }
   }
 
   const renderInputPage = () => (
     <div className="input-page">
       <div className="main-content-area">
-<<<<<<< HEAD
-        {/* Left Side - Media Input Buttons */}
-        <div className="left-media-section">
-          <div className="media-buttons-container">
-            <div className="media-button" onClick={() => setInputType('image')}>
-              <div className="media-icon image-icon">
-                <div className="mountain-icon">
-                  <div className="mountain-peak"></div>
-                  <div className="mountain-base"></div>
-                  <div className="sun-dot"></div>
-                </div>
-              </div>
-              <span className="media-label">Image</span>
-            </div>
-
-            <div className="media-button" onClick={() => setInputType('video')}>
-              <div className="media-icon video-icon">
-                <div className="camera-icon">
-                  <div className="camera-body"></div>
-                  <div className="camera-lens"></div>
-                </div>
-              </div>
-              <span className="media-label">Video</span>
-            </div>
-          </div>
-
-          {/* Audio/Streaming Icon */}
-          <div className="audio-icon-container">
-            <div className="audio-icon" onClick={() => setInputType('voice')}>
-              <div className="wave-lines-horizontal">
-                <div className="wave-line-h"></div>
-                <div className="wave-line-h"></div>
-                <div className="wave-line-h"></div>
-              </div>
-              <span className="media-label">Voice Input</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Right Side - Text Input */}
-        <div className="right-text-section">
-          <div className="text-input-container">
-            <textarea
-              className="main-text-input"
-              placeholder="Type here..."
-              value={inputData}
-              onChange={(e) => setInputData(e.target.value)}
-            />
-          </div>
-          <div className="analyze-section">
-            <button className="analyze-button" onClick={handleInputSubmit}>
-              <span className="analyze-text">Analyze</span>
-            </button>
-          </div>
-=======
         <div className="input-type-toggle">
           <button
             className={`toggle-btn ${inputType === 'text' ? 'active' : ''}`}
@@ -253,7 +136,6 @@ const AIMisinfoChecker = () => {
           <button className="analyze-button" onClick={handleInputSubmit}>
             <span className="analyze-text">Analyze</span>
           </button>
->>>>>>> JD
         </div>
       </div>
     </div>
@@ -277,14 +159,8 @@ const AIMisinfoChecker = () => {
   )
 
   const renderDashboard = () => {
-<<<<<<< HEAD
-    const isMisinfo = analysisResult?.misinfo
-    const backdropClass = isMisinfo ? 'misinfo-backdrop' : 'truth-backdrop'
-    
-=======
     const isMisinfo = analysisResult?.misinfo;
     const backdropClass = isMisinfo ? 'misinfo-backdrop' : 'truth-backdrop';
->>>>>>> JD
     return (
       <div className={`dashboard-page ${backdropClass}`}>
         <div className="dashboard-container">
@@ -314,21 +190,6 @@ const AIMisinfoChecker = () => {
             <div className="news-sources-box">
               <h3>Related News & Sources</h3>
               <div className="sources-content">
-<<<<<<< HEAD
-                {analysisResult.source.map((source, index) => (
-                  <div key={index} className="source-item">
-                    <span className="source-url">{source}</span>
-                  </div>
-                ))}
-                <div className="related-news">
-                  {analysisResult.relatedNews.map((news, index) => (
-                    <div key={index} className="news-item">
-                      <h4>{news.title}</h4>
-                      <p>{news.source} • {news.date}</p>
-                    </div>
-                  ))}
-                </div>
-=======
                 {Array.isArray(analysisResult.source) && analysisResult.source.map((source, index) => (
                   <div key={index} className="source-item">
                     {source.title && <span className="source-title">{source.title}</span>}{' '}
@@ -342,47 +203,16 @@ const AIMisinfoChecker = () => {
                     )}
                   </div>
                 ))}
->>>>>>> JD
               </div>
             </div>
 
             <div className="statistics-box">
-<<<<<<< HEAD
-              <h3>Predictive Monitoring</h3>
-              <div className="stats-content">
-                <div className="stat-chart">
-                  <div className="chart-bars">
-                    {Object.entries(analysisResult.statistics.categories).map(([category, value]) => (
-                      <div key={category} className="bar-container">
-                        <div className="bar" style={{ height: `${value}%` }}></div>
-                        <span className="bar-label">{category}</span>
-                        <span className="bar-value">{value}%</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="stat-summary">
-                  <div className="stat-item">
-                    <span className="stat-number">{analysisResult.statistics.totalChecks}</span>
-                    <span className="stat-label">Total Checks</span>
-                  </div>
-                  <div className="stat-item">
-                    <span className="stat-number">{analysisResult.statistics.accuracy}%</span>
-                    <span className="stat-label">Accuracy</span>
-                  </div>
-                  <div className="stat-item">
-                    <span className="stat-number">{analysisResult.statistics.falsePositives}%</span>
-                    <span className="stat-label">False Positives</span>
-                  </div>
-                </div>
-=======
               <h3>Prediction Findings</h3>
               <div className="stats-content">
                 <StatisticalDashboard 
                   analysisResult={analysisResult} 
                   isMisinfo={isMisinfo} 
                 />
->>>>>>> JD
               </div>
             </div>
           </div>
@@ -395,21 +225,9 @@ const AIMisinfoChecker = () => {
               Export Report
             </button>
           </div>
-<<<<<<< HEAD
-
-          {/* Statistical Dashboard */}
-          <StatisticalDashboard 
-            analysisResult={analysisResult} 
-            isMisinfo={isMisinfo} 
-          />
-        </div>
-      </div>
-    )
-=======
         </div>
       </div>
     );
->>>>>>> JD
   }
 
   const renderAboutPage = () => (
