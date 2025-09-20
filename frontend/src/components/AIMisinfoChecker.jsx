@@ -5,7 +5,7 @@ import './AIMisinfoChecker.css'
 
 const AIMisinfoChecker = () => {
   const [currentPage, setCurrentPage] = useState('input') // input, loading, dashboard
-  const [inputType, setInputType] = useState('text') // 'text' or 'link' only
+  const [inputType, setInputType] = useState('text')
   const [inputData, setInputData] = useState('')
   const [analysisResult, setAnalysisResult] = useState(null)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
