@@ -38,6 +38,7 @@ const StatisticalDashboard = ({ analysisResult, isMisinfo }) => {
   const [timeFilter, setTimeFilter] = useState('7d')
   const [selectedCategory, setSelectedCategory] = useState('all')
 
+<<<<<<< HEAD
   // Mock data for demonstrations
   const mockTimeSeriesData = {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -65,6 +66,38 @@ const StatisticalDashboard = ({ analysisResult, isMisinfo }) => {
       {
         label: 'Misinformation Rate %',
         data: [15, 25, 8, 12, 5, 3],
+=======
+  // Use real API data if available
+  const stats = analysisResult?.statistics || {};
+  const prediction = analysisResult?.rumour_prediction || {};
+
+  // Time series for forecast chart
+  const forecastData = prediction.forecast || [];
+  const timeSeriesLabels = forecastData.map(f => f.ds ? new Date(f.ds).toLocaleString() : '');
+  const timeSeriesValues = forecastData.map(f => f.yhat || 0);
+  const timeSeriesChartData = {
+    labels: timeSeriesLabels,
+    datasets: [
+      {
+        label: 'Predicted Claims (Next 12h)',
+        data: timeSeriesValues,
+        borderColor: '#ff4757',
+        backgroundColor: 'rgba(255, 71, 87, 0.1)',
+        tension: 0.4
+      }
+    ]
+  };
+
+  // Category chart
+  const categoryLabels = Object.keys(stats.categories || {});
+  const categoryValues = Object.values(stats.categories || {});
+  const categoryChartData = {
+    labels: categoryLabels,
+    datasets: [
+      {
+        label: 'Checks per Category',
+        data: categoryValues,
+>>>>>>> JD
         backgroundColor: [
           'rgba(102, 126, 234, 0.8)',
           'rgba(118, 75, 162, 0.8)',
@@ -84,6 +117,7 @@ const StatisticalDashboard = ({ analysisResult, isMisinfo }) => {
         borderWidth: 2
       }
     ]
+<<<<<<< HEAD
   }
 
   const mockAccuracyData = {
@@ -120,6 +154,9 @@ const StatisticalDashboard = ({ analysisResult, isMisinfo }) => {
       }
     ]
   }
+=======
+  };
+>>>>>>> JD
 
   const chartOptions = {
     responsive: true,
@@ -236,7 +273,11 @@ const StatisticalDashboard = ({ analysisResult, isMisinfo }) => {
               </p>
               <span className="metric-change">
                 <FaArrowUp className="trend-up" />
+<<<<<<< HEAD
                 +12.5% vs last week
+=======
+                {stats.totalChecks ? `+${stats.totalChecks} checks` : '+0 checks'}
+>>>>>>> JD
               </span>
             </div>
           </div>
@@ -247,10 +288,17 @@ const StatisticalDashboard = ({ analysisResult, isMisinfo }) => {
             </div>
             <div className="metric-content">
               <h3>Model Accuracy</h3>
+<<<<<<< HEAD
               <p className="metric-value accuracy">{analysisResult?.confidence.toFixed(1)}%</p>
               <span className="metric-change">
                 <FaArrowUp className="trend-up" />
                 +2.1% improvement
+=======
+              <p className="metric-value accuracy">{stats.avgConfidence ? stats.avgConfidence + '%' : 'N/A'}</p>
+              <span className="metric-change">
+                <FaArrowUp className="trend-up" />
+                {stats.avgConfidence ? `+${stats.avgConfidence}%` : '+0%'}
+>>>>>>> JD
               </span>
             </div>
           </div>
@@ -261,7 +309,11 @@ const StatisticalDashboard = ({ analysisResult, isMisinfo }) => {
             </div>
             <div className="metric-content">
               <h3>False Positives</h3>
+<<<<<<< HEAD
               <p className="metric-value warning">{analysisResult?.statistics.falsePositives}%</p>
+=======
+              <p className="metric-value warning">{stats.falsePositives ?? 0}%</p>
+>>>>>>> JD
               <span className="metric-change">
                 <FaArrowDown className="trend-down" />
                 -0.8% reduction
@@ -273,15 +325,22 @@ const StatisticalDashboard = ({ analysisResult, isMisinfo }) => {
         {/* Charts Grid */}
         <div className="charts-grid">
           <div className="chart-container">
+<<<<<<< HEAD
             <h3>Detection Trends Over Time</h3>
             <div className="chart-wrapper">
               <Line data={mockTimeSeriesData} options={chartOptions} />
+=======
+            <h3>Rumour Prediction (Next 12h)</h3>
+            <div className="chart-wrapper">
+              <Line data={timeSeriesChartData} options={chartOptions} />
+>>>>>>> JD
             </div>
           </div>
 
           <div className="chart-container">
             <h3>Category Analysis</h3>
             <div className="chart-wrapper">
+<<<<<<< HEAD
               <Bar data={mockCategoryData} options={chartOptions} />
             </div>
           </div>
@@ -297,12 +356,16 @@ const StatisticalDashboard = ({ analysisResult, isMisinfo }) => {
             <h3>Source Credibility Distribution</h3>
             <div className="chart-wrapper">
               <Doughnut data={mockSourceCredibilityData} options={doughnutOptions} />
+=======
+              <Bar data={categoryChartData} options={chartOptions} />
+>>>>>>> JD
             </div>
           </div>
         </div>
 
         {/* Real-time Alerts */}
         <div className="alerts-section">
+<<<<<<< HEAD
           <h3>Real-time Alerts & Insights</h3>
           <div className="alerts-list">
             <div className="alert-item high-priority">
@@ -330,6 +393,26 @@ const StatisticalDashboard = ({ analysisResult, isMisinfo }) => {
               </div>
             </div>
           </div>
+=======
+          <h3>Rumour Alerts & Insights</h3>
+          {prediction.alert ? (
+            <div className="alert-item high-priority">
+              <div className="alert-icon">⚠️</div>
+              <div className="alert-content">
+                <h4>Rumour Spike Predicted!</h4>
+                <p>Possible spike hours: {prediction.spike_hours?.join(', ')}</p>
+              </div>
+            </div>
+          ) : (
+            <div className="alert-item low-priority">
+              <div className="alert-icon">✅</div>
+              <div className="alert-content">
+                <h4>No rumour spike predicted</h4>
+                <p>System stable, no abnormal spread detected.</p>
+              </div>
+            </div>
+          )}
+>>>>>>> JD
         </div>
       </div>
     </div>

@@ -5,7 +5,11 @@ import './AIMisinfoChecker.css'
 
 const AIMisinfoChecker = () => {
   const [currentPage, setCurrentPage] = useState('input') // input, loading, dashboard
+<<<<<<< HEAD
   const [inputType, setInputType] = useState('text')
+=======
+  const [inputType, setInputType] = useState('text') // 'text' or 'link' only
+>>>>>>> JD
   const [inputData, setInputData] = useState('')
   const [analysisResult, setAnalysisResult] = useState(null)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
@@ -18,11 +22,24 @@ const AIMisinfoChecker = () => {
     setCurrentPage('loading')
     
     try {
+<<<<<<< HEAD
       const response = await fetch(`${import.meta.env.VITE_API_URL}/misinfo/analyze`, {
+=======
+      // Use FastAPI endpoint, default to localhost:8000/verify
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000/verify';
+      let payload = {};
+      if (inputType === 'text') {
+        payload = { text: inputData };
+      } else {
+        payload = { link: inputData };
+      }
+      const response = await fetch(apiUrl, {
+>>>>>>> JD
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+<<<<<<< HEAD
         body: JSON.stringify({
           inputType: inputType,
           inputData: inputData
@@ -66,6 +83,56 @@ const AIMisinfoChecker = () => {
       }
     } catch (error) {
       console.error('Error calling API:', error)
+=======
+        body: JSON.stringify(payload)
+      });
+      // Handle non-200 responses and empty body
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+      }
+      let result = null;
+      try {
+        result = await response.json();
+      } catch (jsonErr) {
+        throw new Error('Invalid JSON response');
+      }
+      // Debug log: show raw API response
+      console.log('Raw API response:', result);
+      // If backend uses { success: true, data: {...} }
+      const apiData = result.data || result;
+      const vr = apiData.verification_result || {};
+      const cc = apiData.content_categorization || {};
+      const label = apiData.label || vr.label;
+      const confidence = (vr.confidence ?? apiData.confidence ?? 0) * 100;
+      const srcs = Array.isArray(apiData.sources) ? apiData.sources : (apiData.evidence_analysis?.top_sources || []);
+
+      if (label) {
+        const truthyLabels = ['True', 'Likely True', 'Partially True', 'Needs Context', 'Opinion', 'Opinion/Editorial', 'Satire', 'Satire/Sarcasm'];
+        // Map backend result to frontend format
+        const mappedResult = {
+          misinfo: !truthyLabels.includes(label),
+          source: srcs,
+          sourceClassifier: cc.category || apiData.category || 'General',
+          classifiedType: cc.type || apiData.type || 'General',
+          inputType: inputType,
+          confidence,
+          relatedNews: apiData.relatedNews || [],
+          statistics: apiData.system_stats || apiData.statistics || {
+            totalChecks: 0,
+            avgConfidence: 0,
+            falsePositives: 0,
+            categories: {}
+          },
+          rumour_prediction: apiData.rumour_prediction || {},
+        };
+        setAnalysisResult(mappedResult);
+        setCurrentPage('dashboard');
+      } else {
+        throw new Error('API returned incomplete result');
+      }
+    } catch (error) {
+      console.error('Error calling API:', error);
+>>>>>>> JD
       // Fallback to mock data
       const mockResult = {
         misinfo: Math.random() > 0.5,
@@ -90,17 +157,26 @@ const AIMisinfoChecker = () => {
             'Finance': 10
           }
         }
+<<<<<<< HEAD
       }
       setAnalysisResult(mockResult)
       setCurrentPage('dashboard')
     } finally {
       setIsAnalyzing(false)
+=======
+      };
+      setAnalysisResult(mockResult);
+      setCurrentPage('dashboard');
+    } finally {
+      setIsAnalyzing(false);
+>>>>>>> JD
     }
   }
 
   const renderInputPage = () => (
     <div className="input-page">
       <div className="main-content-area">
+<<<<<<< HEAD
         {/* Left Side - Media Input Buttons */}
         <div className="left-media-section">
           <div className="media-buttons-container">
@@ -154,6 +230,30 @@ const AIMisinfoChecker = () => {
               <span className="analyze-text">Analyze</span>
             </button>
           </div>
+=======
+        <div className="input-type-toggle">
+          <button
+            className={`toggle-btn ${inputType === 'text' ? 'active' : ''}`}
+            onClick={() => setInputType('text')}
+          >Text</button>
+          <button
+            className={`toggle-btn ${inputType === 'link' ? 'active' : ''}`}
+            onClick={() => setInputType('link')}
+          >Source Link</button>
+        </div>
+        <div className="text-input-container">
+          <textarea
+            className="main-text-input"
+            placeholder={inputType === 'text' ? 'Enter claim or statement...' : 'Paste source link (URL)...'}
+            value={inputData}
+            onChange={(e) => setInputData(e.target.value)}
+          />
+        </div>
+        <div className="analyze-section">
+          <button className="analyze-button" onClick={handleInputSubmit}>
+            <span className="analyze-text">Analyze</span>
+          </button>
+>>>>>>> JD
         </div>
       </div>
     </div>
@@ -177,9 +277,14 @@ const AIMisinfoChecker = () => {
   )
 
   const renderDashboard = () => {
+<<<<<<< HEAD
     const isMisinfo = analysisResult?.misinfo
     const backdropClass = isMisinfo ? 'misinfo-backdrop' : 'truth-backdrop'
     
+=======
+    const isMisinfo = analysisResult?.misinfo;
+    const backdropClass = isMisinfo ? 'misinfo-backdrop' : 'truth-backdrop';
+>>>>>>> JD
     return (
       <div className={`dashboard-page ${backdropClass}`}>
         <div className="dashboard-container">
@@ -209,6 +314,7 @@ const AIMisinfoChecker = () => {
             <div className="news-sources-box">
               <h3>Related News & Sources</h3>
               <div className="sources-content">
+<<<<<<< HEAD
                 {analysisResult.source.map((source, index) => (
                   <div key={index} className="source-item">
                     <span className="source-url">{source}</span>
@@ -222,10 +328,26 @@ const AIMisinfoChecker = () => {
                     </div>
                   ))}
                 </div>
+=======
+                {Array.isArray(analysisResult.source) && analysisResult.source.map((source, index) => (
+                  <div key={index} className="source-item">
+                    {source.title && <span className="source-title">{source.title}</span>}{' '}
+                    {source.url ? (
+                      <a href={source.url} target="_blank" rel="noopener noreferrer">{source.domain || source.url}</a>
+                    ) : (
+                      <span>{source.domain}</span>
+                    )}{' '}
+                    {typeof source.credibility !== 'undefined' && (
+                      <span className="source-credibility">Credibility: {source.credibility}</span>
+                    )}
+                  </div>
+                ))}
+>>>>>>> JD
               </div>
             </div>
 
             <div className="statistics-box">
+<<<<<<< HEAD
               <h3>Predictive Monitoring</h3>
               <div className="stats-content">
                 <div className="stat-chart">
@@ -253,6 +375,14 @@ const AIMisinfoChecker = () => {
                     <span className="stat-label">False Positives</span>
                   </div>
                 </div>
+=======
+              <h3>Prediction Findings</h3>
+              <div className="stats-content">
+                <StatisticalDashboard 
+                  analysisResult={analysisResult} 
+                  isMisinfo={isMisinfo} 
+                />
+>>>>>>> JD
               </div>
             </div>
           </div>
@@ -265,6 +395,7 @@ const AIMisinfoChecker = () => {
               Export Report
             </button>
           </div>
+<<<<<<< HEAD
 
           {/* Statistical Dashboard */}
           <StatisticalDashboard 
@@ -274,6 +405,11 @@ const AIMisinfoChecker = () => {
         </div>
       </div>
     )
+=======
+        </div>
+      </div>
+    );
+>>>>>>> JD
   }
 
   const renderAboutPage = () => (
