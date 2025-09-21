@@ -1464,6 +1464,10 @@ def infer_type_and_category(text):
         return "General", "General"
 
 # ------------------ API Endpoints ------------------
+@app.get("/")
+async def health():
+    return {"service": "FactSense AI", "status": "running"}
+    
 @app.post("/verify")
 async def verify(req: VerifyRequest):
     """Smart verification endpoint with LLM-powered source detection"""
